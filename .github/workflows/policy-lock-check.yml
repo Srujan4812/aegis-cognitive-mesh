@@ -1,0 +1,42 @@
+name: Policy lock check
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Compute policy hash
+        run: |
+          python3 scripts/hash_policy.py > computed.sha || (echo "Failed to compute policy hash" && exit 1)
+
+      - name: Compare against lock
+        run: |
+          if [ ! -f policies/policy.lock ]; then
+            echo "policies/policy.lock is missing."
+            exit 1
+          fi
+          LOCK_HASH=$(awk -F': ' '/policy_sha256/{print $2}' policies/policy.lock | tr -d '[:space:]')
+          COMPUTED_HASH=$(cat computed.sha | tr -d '[:space:]')
+          echo "Computed: $COMPUTED_HASH"
+          echo "Locked:   $LOCK_HASH"
+          if [ "$LOCK_HASH" != "$COMPUTED_HASH" ]; then
+            echo "Hash mismatch: update policies/policy.lock"
+            exit 1
+          fi
+          echo "Policy lock is in sync."
