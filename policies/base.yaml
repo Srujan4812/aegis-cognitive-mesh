@@ -1,0 +1,7 @@
+version: 1
+jurisdictions_allowed: ["EU", "US"]
+max_budget_delta: 10000
+min_sla_percent: 96
+pii_rules:
+allow_pii_in_transit: false
+redact_on_export: true
