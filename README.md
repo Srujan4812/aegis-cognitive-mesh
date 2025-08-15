@@ -21,3 +21,13 @@ Prefer local dev; short, deterministic simulations.
 
 -**“Architecture”:**
 “See ops/architecture-v1.png (or architecture-template.txt) for the system layout.”
+
+-**Development**
+
+Git hooks
+To enable the pre-commit policy lock check locally, run:
+bash scripts/setup_hooks.sh
+
+This configures Git to use .githooks so the policy-lock check runs on commit
+
+
