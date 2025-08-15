@@ -1,5 +1,5 @@
 version: "1.0.0"
-description: "ACM core policies: budget, jurisdiction, PII, SLA/latency, and data egress -updated"
+description: "ACM core policies: budget, jurisdiction, PII, SLA/latency, and data egress -updated again updated"
 constraints:
   budget_cap_usd: 10000
   allowed_jurisdictions: ["EU", "US"]
