@@ -1,10 +1,10 @@
 version: "1.0.0"
-description: "ACM core policies: budget, jurisdiction, PII, SLA/latency, and data egress."
+description: "ACM core policies: budget, jurisdiction, PII, SLA/latency, and data egress -updated"
 constraints:
   budget_cap_usd: 10000
   allowed_jurisdictions: ["EU", "US"]
   pii_handling: "encrypt_at_rest_and_in_transit"
-  min_sla_percent: 97
+  min_sla_percent: 96
   max_latency_ms: 500
   data_egress_rules:
     non_eu_egress_allowed: false
