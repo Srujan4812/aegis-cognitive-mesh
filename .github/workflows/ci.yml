@@ -7,18 +7,24 @@ on:
     branches: [ "main" ]
 
 jobs:
-  validate:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate repo structure
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
         run: |
-          test -d infra && echo "infra ok"
-          test -d services && echo "services ok"
-          test -d sim && echo "sim ok"
-          test -d policies && echo "policies ok"
-          test -d audit && echo "audit ok"
-          test -d ui && echo "ui ok"
-          test -d ops && echo "ops ok"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          PYTHONPATH: .
+        run: |
+          python tests/test_policy_hash.py
