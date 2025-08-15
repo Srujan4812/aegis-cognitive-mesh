@@ -27,4 +27,4 @@ jobs:
         env:
           PYTHONPATH: .
         run: |
-          python tests/test_policy_hash.py
+          pytest -q
