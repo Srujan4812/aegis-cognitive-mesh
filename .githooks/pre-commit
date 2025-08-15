@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Run the policy lock check if the script exists
+if [ -x ".githooks/policy-lock-check.sh" ]; then
+  .githooks/policy-lock-check.sh
+fi
