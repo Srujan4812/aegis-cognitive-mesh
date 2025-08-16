@@ -50,3 +50,14 @@ artifact:
 artifact-example:
 	@./scripts/verify_then_simulate_json.py plan_pass.json twin_snapshot.json
 
+.PHONY: lineage-example lineage
+
+lineage-example:
+	@./scripts/verify_then_simulate_json.py plan_pass.json twin_snapshot.json > artifacts/_tmp_artifact.json
+	@./scripts/write_lineage.py artifacts/_tmp_artifact.json plan_pass.json
+
+lineage:
+	@./scripts/verify_then_simulate_json.py $(PLAN) $(SNAPSHOT) > artifacts/_tmp_artifact.json
+	@./scripts/write_lineage.py artifacts/_tmp_artifact.json $(PLAN)
+
+
