@@ -41,3 +41,12 @@ verify-sim-example:
 # Housekeeping
 clean:
 	@find . -name "__pycache__" -type d -prune -exec rm -rf {} + 2>/dev/null || true
+
+.PHONY: artifact artifact-example
+
+artifact:
+	@./scripts/verify_then_simulate_json.py $(PLAN) $(SNAPSHOT)
+
+artifact-example:
+	@./scripts/verify_then_simulate_json.py plan_pass.json twin_snapshot.json
+
