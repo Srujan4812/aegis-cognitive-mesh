@@ -1,6 +1,6 @@
 # ACM Makefile
 
-.PHONY: policy-hash policy-lock policy-validate verify pass fail clean
+.PHONY: policy-hash policy-lock policy-validate verify pass fail clean simulate simulate-example
 
 # Policy utilities
 policy-hash:
@@ -23,6 +23,13 @@ pass:
 
 fail:
 	@./scripts/verify_plan.sh plan_fail.json
+
+# Simulator shortcuts (Day 10)
+simulate:
+	@./scripts/simulate_plan.sh $(SNAPSHOT) $(PLAN)
+
+simulate-example:
+	@./scripts/simulate_plan.sh twin_snapshot.json plan_example.json
 
 # Housekeeping
 clean:
