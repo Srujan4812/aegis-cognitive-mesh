@@ -11,8 +11,8 @@ def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: scripts/write_lineage.py <combined.json> <plan.json>", file=sys.stderr)
+    if len(sys.argv) < 3:
+        print("Usage: write_lineage.py <combined_json> <plan_json>")
         sys.exit(1)
 
     combined_path = sys.argv[1]
@@ -26,7 +26,6 @@ def main():
     verify = combined.get("verify", {})
     sim = combined.get("simulation", {})
 
-    # Dataset provenance (Purview-ready later)
     datasets = {
         "twin_snapshot_path": os.path.abspath(os.environ.get("SNAPSHOT_PATH", "twin_snapshot.json")),
         "plan_path": os.path.abspath(plan_path),
