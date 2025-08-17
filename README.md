@@ -77,3 +77,38 @@ If a commit is blocked by the pre‑commit hook with “Hash mismatch”:
 Run make policy-lock
 
 Re‑stage and commit.
+
+Day 13 — Mini Demo (First Integrated Run)
+Goal: Single end-to-end run touching ADT briefly and writing an immutable proof.
+
+Run (one command):
+
+./day13.sh
+
+Artifacts produced:
+
+Event: data/events/<id>.json
+
+Plans: data/plans/<id>.json
+
+Simulation: data/sim/<id>_sim.json
+
+Proof log (hash-chained): audits/day13_proof.jsonl
+
+Chain head: audits/chain.meta
+
+ADT usage snapshot: audits/day13_adt_usage.json (skips if env not set)
+
+Demo bundle: demo/day13/run_summary.json
+
+Optional ADT touch:
+
+export RUN_ADT_TOUCH=true
+
+export ADT_INSTANCE_URL="https://<your-adt>.api.<region>.digitaltwins.azure.net"
+
+python scripts/adt_touch.py
+
+Tag for rehearsal:
+
+v0.13-demo
