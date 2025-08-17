@@ -112,3 +112,38 @@ python scripts/adt_touch.py
 Tag for rehearsal:
 
 v0.13-demo
+
+## Attested secret release: simulated vs SEV-SNP
+
+- **Simulated (default)**
+  - Run:
+    - `./scripts/run_gate.sh`
+  - Expected:
+    - An audit line with `attestation_type:"simulated"`
+    - `released:true` and a demo value
+
+- **SEV-SNP (hardware mode)**
+  - Requirements:
+    - Run inside an Azure Confidential VM (SEV-SNP)
+    - Have guest tools installed (`azguestattestation` or `snpguest-report`)
+  - Fetch+run:
+    - `./scripts/run_gate_sevsnp.sh "acm-demo-ephemeral" audits/snp_token.jwt`
+  - Manual run with existing token:
+    - `export ACM_POLICY=sevsnp`
+    - `./scripts/run_gate.sh "acm-demo-ephemeral" audits/snp_token.jwt`
+
+- **Validate a token offline (no network)**
+  - `./scripts/validate_jwt.py audits/day15_token.jwt`
+  - Output includes `iss` and `x-ms-attestation-type` and appends to `audits/day17_check.log`
+
+- **Policy files**
+  - `policies/skr.release.json`: simulated (active by default)
+  - `policies/skr.release.sevsnp.json`: SEV-SNP (used when `ACM_POLICY=sevsnp`)
+
+- **Notes**
+  - The gate prints a small audit JSON line before the release result.
+  - For SEV-SNP fetching on Ubuntu:
+    ```bash
+    sudo apt-get update
+    sudo apt-get install -y azguestattestation jq curl
+    ```
