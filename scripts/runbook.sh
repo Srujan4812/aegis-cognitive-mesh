@@ -28,12 +28,25 @@ ACTION="approved_action"
 ACTION_RESULT="ok"
 echo "[ok] Approved action executed."
 
-# 4) Hash-chained audit entry
+# 4) Hash-chained audit entry (robust append)
+# 4) Hash-chained audit entry (compact, one line per entry)
 CHAIN_FILE="audits/chain.log"
 TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-PREV_HASH="$(tail -n 1 "$CHAIN_FILE" 2>/dev/null | jq -r '.hash // empty')"
+mkdir -p "$(dirname "$CHAIN_FILE")"
 
-# Build entry without hash first
+# Read previous hash safely (only if last line is valid JSON)
+if [[ -s "$CHAIN_FILE" ]]; then
+  LAST="$(tail -n 1 "$CHAIN_FILE" || true)"
+  if echo "$LAST" | jq -e . >/dev/null 2>&1; then
+    PREV_HASH="$(echo "$LAST" | jq -r '.hash // empty')"
+  else
+    PREV_HASH=""
+  fi
+else
+  PREV_HASH=""
+fi
+
+# Build entry without hash
 ENTRY="$(jq -n \
   --arg ts "$TS" \
   --arg policy "$POLICY_MODE" \
@@ -41,21 +54,23 @@ ENTRY="$(jq -n \
   --arg released "$RELEASED" \
   --arg action "$ACTION" \
   --arg result "$ACTION_RESULT" \
-  --arg prev "${PREV_HASH:-}" \
+  --arg prev "$PREV_HASH" \
   '{
     ts:$ts,
     policy_mode:$policy,
     attestation_type:$att,
     released:($released=="true"),
     action:$action,
-    result:$result,
-    prev_hash:($prev|select(.!=""))
-  }'
+    result:$result
+  } + ( $prev|length>0 | if . then {prev_hash:$prev} else {} end )' \
 )"
 
-# Compute hash over canonical JSON
-HASH="$(printf "%s" "$ENTRY" | jq -c '.' | sha256sum | awk '{print $1}')"
-FINAL="$(echo "$ENTRY" | jq --arg h "$HASH" '. + {hash:$h}')"
+# Compute hash over the canonical compact JSON
+CANON="$(printf "%s" "$ENTRY" | jq -c '.')"
+HASH="$(printf "%s" "$CANON" | sha256sum | awk '{print $1}')"
+FINAL="$(echo "$CANON" | jq -c --arg h "$HASH" '. + {hash:$h}')"
 
-echo "$FINAL" | tee -a "$CHAIN_FILE" >/dev/null
+# Append exactly one compact JSON line with newline
+printf "%s\n" "$FINAL" >> "$CHAIN_FILE"
 echo "[ok] Audit appended to $CHAIN_FILE"
+
