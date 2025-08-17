@@ -147,3 +147,20 @@ v0.13-demo
     sudo apt-get update
     sudo apt-get install -y azguestattestation jq curl
     ```
+Append this to README.md:
+
+Day 19 — Local Assistant (no cloud calls)
+
+Default mode: local (zero cost; no Azure/OpenAI).
+
+Run:
+
+./scripts/assist.sh "your question"
+
+Behavior:
+
+Logs to audits/day19_assistant.log with timestamp and deterministic answer.
+
+Future (optional):
+
+To enable a cloud path later, wire a private endpoint and set ASSIST_MODE=cloud, then route through an approved client.
