@@ -9,3 +9,5 @@ audits/day13_proof.jsonl
 audits/day13_adt_usage.json
 audits/chain.meta
 demo/day13/run_summary.json
+__pycache__/
+*.pyc
