@@ -1,4 +1,0 @@
-{"ts":"2025-08-17T18:00:53Z","policy_mode":"sevsnp","attestation_type":"simulated","released":true,"action":"approved_action","result":"ok","hash":"fe780be2f056dc40d6b43b4e25829e92166e33b4c4e3b5d23d2f4570012cb377"}
-{"ts":"2025-08-18T11:15:44Z","policy_mode":"simulated","attestation_type":"simulated","released":true,"action":"approved_action","result":"ok","prev_hash":"fe780be2f056dc40d6b43b4e25829e92166e33b4c4e3b5d23d2f4570012cb377","hash":"b2f37ebea6832d36df8aa2ce861683407b731ba3a842abffdb6006634f7008b2"}
-{"timestamp": "2025-08-18T11:22:16Z", "audit": {"attestation_type": "simulated"}, "released": true, "secret_name": "acm-demo-ephemeral", "token_digest": "24bc7c98ff15"}
-{"ts":"2025-08-18T11:22:16Z","policy_mode":"simulated","attestation_type":"simulated","released":true,"action":"approved_action","result":"ok","hash":"a8208b7a6dbe2941e02f6dab2e1e563de8e6f65ffca9c01295b0288c8d2bb61f"}
