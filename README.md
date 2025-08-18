@@ -164,3 +164,15 @@ Logs to audits/day19_assistant.log with timestamp and deterministic answer.
 Future (optional):
 
 To enable a cloud path later, wire a private endpoint and set ASSIST_MODE=cloud, then route through an approved client.
+
+Day 21 — Auto-revision on UNSAT
+
+What it does: When a plan violates policy (budget, delay, data-residency, PII), it is auto-revised in a fixed priority order until SAT or max attempts.
+
+Run the demo:
+
+PYTHONPATH=. ./scripts/auto_revise.py '{"policy":{"budget_cap":10000,"sla_min":96,"allow_cross_region":false,"max_delay_minutes":60},"plan":{"route":"R7","added_cost":12000,"expected_delay_minutes":85,"data_region":"US","pii_used":true},"max_attempts":6}'
+
+Or use wrapper: ./scripts/demo_day21.sh
+
+Expected: final=SAT with fixes: budget_exceeded → delay_exceeds_limit → data_egress_non_eu → pii_used_not_allowed. A compact log line is written to audits/day21_auto_revise.log, and the wrapper writes audits/day21_note.log.
