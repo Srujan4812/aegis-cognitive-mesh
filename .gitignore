@@ -14,3 +14,4 @@ __pycache__/
 __pycache__/
 *.pyc
 audits/chain.log
+audits/chain.log
