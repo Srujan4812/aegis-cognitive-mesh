@@ -2,6 +2,8 @@
 
 # 🚀 Aegis Cognitive Mesh (ACM)
 
+Live demo : visit website : https://aegis-cognitive-mesh-m3ewstsrqoz6wkvfxjaegc.streamlit.app/
+
 **Azure-native, secure, AI decision fabric — “prove-then-execute.”**
 
 ACM is a highly secure, **attested decision-making mesh** that ensures all actions are safe, auditable, and resilient. It blends **Confidential Compute, Azure Attestation, Digital Twins, and formal policy checks** into a single fabric for **deterministic, interview-ready demos**.
