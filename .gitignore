@@ -15,3 +15,14 @@ __pycache__/
 *.pyc
 audits/chain.log
 audits/chain.log
+
+# Ignore generated simulation/audit data
+audits/*.log
+audits/*.jsonl
+audits/chain.meta
+artifacts/*
+data/events/*
+data/plans/*
+twin_snapshot.json
+!artifacts/.gitkeep
+!data/.gitkeep
